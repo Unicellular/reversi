@@ -1,16 +1,8 @@
-class Player
-  attr_reader :color
-
-  def get_move(board)
-    board.print
-
-    begin
-      print "Please input move (row,col) > "
-      row, col = gets.chomp.split(",").map { |coord_s| Integer(coord_s) }
-
-      pos(row, col)
-    rescue
-      retry
+module Reversi
+  class Player
+    def move( board, color )
+      print "#{color}'s turn, your move:"
+      Position.new(*(gets.chomp.split(',').map(&:to_i)))
     end
   end
 end

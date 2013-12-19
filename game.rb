@@ -1,62 +1,39 @@
+module Reversi
+  class Game
+    def initialize( player1, player2 )
+      @board = Board.new
+      @players = { white: player1, black: player2 }
+      @current_color = :black
+    end
 
-require_relative './board'
-require_relative './piece'
-require_relative './player'
-require_relative './position'
-
-class Game
-  attr_reader :board, :current_color
-
-  def initialize(player1, player2, board = Board.new)
-    @players = {
-      :white => player1,
-      :black => player2
-    }
-    @board = board
-    @current_color = :white
-  end
-
-  def play
-    until board.result
-      begin
-        move(current_player.get_move(board))
-        change_player
-      rescue InvalidMoveError
-        retry
+    def start
+      until end?
+	change_player
+	next unless @board.has_move? @current_color
+	begin
+	  @board.show
+	  move = current_player.move( @board, @current_color )
+	end until @board.valid?( move, @current_color )
+	place_piece( move, @current_color )
       end
     end
-    
-    print_game_result
+
+    private
+      def current_player
+	@players[@current_color]
+      end
+
+      def change_player
+	@current_color = (@current_color == :black) ? :white : :black
+      end
+
+      def end?
+	!(@board.result.nil?)
+      end
+
+      def place_piece( pos, color )
+	@board[pos] = color
+	@board.flip_neighbor( pos, color )
+      end
   end
-
-  private
-  def current_player
-    @players[current_color]
-  end
-
-  def change_player
-    @current_color = (@current_color == :black) ? :white : :black
-  end
-
-  def move(move_pos)
-    Piece.place(board, move_pos, current_color)
-  end
-  
-  def print_game_result
-
-    board.print
-
-    case board.result
-    when :black
-      puts "Black has won!"
-    when :white
-      puts "White has won!"
-    when :draw
-      puts "No one wins!"
-    end
-  end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  Game.new(Player.new, Player.new).play
 end
