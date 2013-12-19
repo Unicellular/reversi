@@ -11,11 +11,13 @@ module Reversi
 	change_player
 	next unless @board.has_move? @current_color
 	begin
-	  @board.show
+	  @board.show( @current_color )
 	  move = current_player.move( @board, @current_color )
 	end until @board.valid?( move, @current_color )
 	place_piece( move, @current_color )
       end
+      @board.show( @current_color )
+      puts "winner is #{@board.result}"
     end
 
     private

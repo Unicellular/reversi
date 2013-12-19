@@ -1,6 +1,6 @@
 module Reversi
   class Board
-    SIZE = 6
+    SIZE = 8
     CENTER = [SIZE / 2 - 1, SIZE / 2]
     INIT_PIECE = {
       white: [Reversi::Position.new(CENTER[0], CENTER[0]), Reversi::Position.new(CENTER[1], CENTER[1])],
@@ -63,6 +63,15 @@ module Reversi
       end
     end
 
+    def valid_moves( color )
+      (0...SIZE).map do |i|
+	(0...SIZE).map do |j|
+	  pos = Position.new( i, j )
+	  pos if valid?( pos, color )
+	end
+      end.flatten.compact
+    end
+
     def valid?( pos, color )
       return false if out_of_bounds?( pos )
       return false unless self[pos].nil?
@@ -107,13 +116,20 @@ module Reversi
       end
     end
 
-    def show
-      pic = { white: "O", black: "X" }
+    def show( color )
+      pic = {
+	white: "O",
+	black: "X",
+	possible: "*"
+      }
       pic.default = "."
+      possible = valid_moves( color )
+      possible.each{ |pos| self[pos] = :possible }
       puts ' ' * 2 +  (0...SIZE).to_a.join(' ')
       @content.each_with_index do |row,i|
-	puts row.map { |grid| pic[grid] }.unshift(i).join(' ')
+	puts row.map{ |grid| pic[grid] }.unshift(i).join(' ')
       end
+      possible.each{ |pos| self[pos] = nil if self[pos] == :possible }
     end
   end
 end
