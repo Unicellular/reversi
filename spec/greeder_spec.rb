@@ -8,10 +8,10 @@ describe Greeder do
   let(:pieces) do
     {
       white: [[2, 4], [3, 4], [4, 4], [5, 4], [3, 3]].map do |cood|
-	Position.new( cood )
+        Position.new( cood )
       end,
       black: [[4, 3], [4, 5]].map do |cood|
-	Position.new( cood )
+        Position.new( cood )
       end
     }
   end
@@ -20,9 +20,9 @@ describe Greeder do
   describe "#move should return most greedy action" do
     before do
       [:white, :black].each do |color|
-	pieces[color].each do |pos|
-	  board[pos] = color
-	end
+        pieces[color].each do |pos|
+          board[pos] = color
+        end
       end
     end
 

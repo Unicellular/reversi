@@ -19,9 +19,9 @@ module Reversi
     def initialize
       @content = Array.new(SIZE){ Array.new(SIZE){nil} }
       INIT_PIECE.each do |color, positions|
-	positions.each do |pos|
-	  self[pos] = color
-	end
+          positions.each do |pos|
+          self[pos] = color
+        end
       end
     end
 
@@ -39,36 +39,36 @@ module Reversi
       black = 0
       white = 0
       @content.flatten.each do |pos|
-	next if pos.nil?
+        next if pos.nil?
 
-	black += 1 if pos == :black
-	white += 1 if pos == :white
+        black += 1 if pos == :black
+        white += 1 if pos == :white
       end
 
       case black <=> white
-	when 1
-	  :black
-	when -1
-	  :white
-	else
-	  :draw
+        when 1
+          :black
+        when -1
+          :white
+        else
+          :draw
       end
     end
 
     def has_move?( color )
       (0...SIZE).any? do |i|
-	(0...SIZE).any? do |j|
-	  valid?( Position.new( i, j ), color )
-	end
+        (0...SIZE).any? do |j|
+          valid?( Position.new( i, j ), color )
+        end
       end
     end
 
     def valid_moves( color )
       (0...SIZE).map do |i|
-	(0...SIZE).map do |j|
-	  pos = Position.new( i, j )
-	  pos if valid?( pos, color )
-	end
+        (0...SIZE).map do |j|
+          pos = Position.new( i, j )
+          pos if valid?( pos, color )
+        end
       end.flatten.compact
     end
 
@@ -81,7 +81,7 @@ module Reversi
 
     def pieces_to_flip( pos, color )
       DIRECTIONS.map do |dir|
-	pieces_to_flip_dir( pos, color, dir )
+        pieces_to_flip_dir( pos, color, dir )
       end.flatten
     end
 
@@ -89,16 +89,16 @@ module Reversi
       current_pos = pos + dir
       result = []
       loop do
-	if out_of_bounds?( current_pos )
-	  return []
-	elsif self[current_pos].nil?
-	  return []
-	elsif self[current_pos] == color
-	  return result
-	else
-	  result.push current_pos
-	end
-	current_pos += dir
+        if out_of_bounds?( current_pos )
+          return []
+        elsif self[current_pos].nil?
+          return []
+        elsif self[current_pos] == color
+          return result
+        else
+          result.push current_pos
+        end
+        current_pos += dir
       end
     end
 
@@ -112,22 +112,22 @@ module Reversi
 
     def flip_neighbor( pos, color )
       pieces_to_flip( pos, color ).each do |piece|
-	flip! piece
+        flip! piece
       end
     end
 
     def show( color )
       pic = {
-	white: "O",
-	black: "X",
-	possible: "*"
+        white: "O",
+        black: "X",
+        possible: "*"
       }
       pic.default = "."
       possible = valid_moves( color )
       possible.each{ |pos| self[pos] = :possible }
       puts ' ' * 2 +  (0...SIZE).to_a.join(' ')
       @content.each_with_index do |row,i|
-	puts row.map{ |grid| pic[grid] }.unshift(i).join(' ')
+        puts row.map{ |grid| pic[grid] }.unshift(i).join(' ')
       end
       possible.each{ |pos| self[pos] = nil if self[pos] == :possible }
     end

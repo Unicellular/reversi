@@ -8,13 +8,13 @@ module Reversi
 
     def start
       until end?
-	change_player
-	next unless @board.has_move? @current_color
-	show_situation
-	begin
-	  move = current_player.move( @board, @current_color )
-	end until @board.valid?( move, @current_color )
-	place_piece( move, @current_color )
+        change_player
+        next unless @board.has_move? @current_color
+        show_situation
+        begin
+          move = current_player.move( @board, @current_color )
+        end until @board.valid?( move, @current_color )
+        place_piece( move, @current_color )
       end
       show_situation
       puts "winner is #{@board.result}"
@@ -22,27 +22,27 @@ module Reversi
 
     private
       def current_player
-	@players[@current_color]
+        @players[@current_color]
       end
 
       def change_player
-	@current_color = (@current_color == :black) ? :white : :black
+        @current_color = (@current_color == :black) ? :white : :black
       end
 
       def end?
-	!(@board.result.nil?)
+        !(@board.result.nil?)
       end
 
       def place_piece( pos, color )
-	@board[pos] = color
-	@board.flip_neighbor( pos, color )
+        @board[pos] = color
+        @board.flip_neighbor( pos, color )
       end
 
       def show_situation
-	@board.show( @current_color )
-	[:white, :black].each do |color|
-	  puts "#{color}: #{@board.count(color)}"
-	end
+        @board.show( @current_color )
+        [:white, :black].each do |color|
+          puts "#{color}: #{@board.count(color)}"
+        end
       end
   end
 end
