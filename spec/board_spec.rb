@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative 'reversi'
+require_relative '../reversi'
 
 include Reversi
 

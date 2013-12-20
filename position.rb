@@ -2,8 +2,12 @@ module Reversi
   class Position
     attr_reader :row, :col
 
-    def initialize(row, col)
-      @row, @col = row, col
+    def initialize(row, col = nil)
+      if row.is_a? Array
+	@row, @col = row[0], row[1]
+      else
+	@row, @col = row, col
+      end
     end
 
     def +(dir)
