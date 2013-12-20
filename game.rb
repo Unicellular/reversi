@@ -10,13 +10,13 @@ module Reversi
       until end?
 	change_player
 	next unless @board.has_move? @current_color
+	show_situation
 	begin
-	  @board.show( @current_color )
 	  move = current_player.move( @board, @current_color )
 	end until @board.valid?( move, @current_color )
 	place_piece( move, @current_color )
       end
-      @board.show( @current_color )
+      show_situation
       puts "winner is #{@board.result}"
     end
 
@@ -36,6 +36,13 @@ module Reversi
       def place_piece( pos, color )
 	@board[pos] = color
 	@board.flip_neighbor( pos, color )
+      end
+
+      def show_situation
+	@board.show( @current_color )
+	[:white, :black].each do |color|
+	  puts "#{color}: #{@board.count(color)}"
+	end
       end
   end
 end

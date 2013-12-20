@@ -131,5 +131,9 @@ module Reversi
       end
       possible.each{ |pos| self[pos] = nil if self[pos] == :possible }
     end
+
+    def count( color )
+      @content.flatten.count{ |piece| piece == color }
+    end
   end
 end
