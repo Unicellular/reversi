@@ -15,17 +15,17 @@ describe Board do
 
   it "both color should have move" do
     [:white, :black].each do |color|
-      board.has_move?(color).should be_true
+      expect(board.has_move?(color)).to be true
     end
   end
 
   it "valid postions should be valid for white" do
     valid_positions.each do |pos|
-      board.valid?(pos, :white).should be_true
+      expect(board.valid?(pos, :white)).to be true
     end
   end
 
   it "#valid_moves should return valid positions" do
-    board.valid_moves( :white ).should eq(valid_positions)
+    expect(board.valid_moves( :white )).to eq(valid_positions)
   end
 end

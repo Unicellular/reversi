@@ -26,6 +26,6 @@ describe Greeder do
       end
     end
 
-    it { greeder.move( board, :black ).should eq( Position.new( 2, 3 ) ) }
+    it { expect(greeder.move( board, :black )).to eq( Position.new( 2, 3 ) ) }
   end
 end
