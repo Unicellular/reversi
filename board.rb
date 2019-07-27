@@ -35,16 +35,7 @@ module Reversi
 
     def result
       return nil unless [:white, :black].none? { |color| has_move? color }
-
-      black = 0
-      white = 0
-      @content.flatten.each do |pos|
-        next if pos.nil?
-
-        black += 1 if pos == :black
-        white += 1 if pos == :white
-      end
-
+      black, white = count_piece
       case black <=> white
         when 1
           :black
@@ -53,6 +44,18 @@ module Reversi
         else
           :draw
       end
+    end
+
+    def count_piece
+      black = 0
+      white = 0
+      @content.flatten.each do |pos|
+        next if pos.nil?
+
+        black += 1 if pos == :black
+        white += 1 if pos == :white
+      end
+      return black, white
     end
 
     def has_move?( color )
@@ -134,6 +137,19 @@ module Reversi
 
     def count( color )
       @content.flatten.count{ |piece| piece == color }
+    end
+
+    def content
+      trans_piece = {
+        white: 1,
+        black: -1
+      }
+      trans_piece.default = 0
+      @content.map do |row|
+        row.map do |piece|
+          trans_piece[piece]
+        end
+      end
     end
   end
 end
