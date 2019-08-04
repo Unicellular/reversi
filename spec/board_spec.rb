@@ -4,7 +4,7 @@ require_relative '../reversi'
 include Reversi
 
 describe Board do
-  let(:board) { Board.new }
+  let(:board) { Board.new.reset }
   let(:valid_positions) { [
     Position.new( 2, 4 ),
     Position.new( 3, 5 ),

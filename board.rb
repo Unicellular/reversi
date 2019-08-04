@@ -17,12 +17,16 @@ module Reversi
       [-1, -1]
     ]
     def initialize
-      @content = Array.new(SIZE){ Array.new(SIZE){nil} }
+    end
+
+    def reset
+      @content = Array.new(SIZE){ Array.new(SIZE){ nil } }
       INIT_PIECE.each do |color, positions|
           positions.each do |pos|
           self[pos] = color
         end
       end
+      self
     end
 
     def []=( pos, color )

@@ -15,7 +15,7 @@ describe Greeder do
       end
     }
   end
-  let(:board) { Board.new }
+  let(:board) { Board.new.reset }
 
   describe "#move should return most greedy action" do
     before do

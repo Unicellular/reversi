@@ -7,17 +7,19 @@ module Reversi
     end
 
     def start
+      @board.reset
       until end?
         change_player
         next unless @board.has_move? @current_color
-        show_situation
+        #show_situation
         begin
           move = current_player.move( @board, @current_color )
         end until @board.valid?( move, @current_color )
         place_piece( move, @current_color )
       end
-      show_situation
-      puts "winner is #{@board.result}"
+      #show_situation
+      #puts "winner is #{@board.result}"
+      @board.result
     end
 
     private

@@ -4,7 +4,7 @@ module Reversi
   class Qlearner
     def initialize( color )
       @internal_nn = RubyFann::Standard.new( num_inputs: 64, hidden_neurons: [ 10 ], num_outputs: 64)
-      @exploration = 0.5
+      @exploration = 0.1
       @learning = 0.7
       @discount = 0.7
       @color = color
@@ -56,6 +56,10 @@ module Reversi
       #@internal_nn.print_connections
       #puts "print_parameters"
       #@internal_nn.print_parameters
+    end
+
+    def save_nn( filename )
+      @internal_nn.save( filename )
     end
   end
 end
