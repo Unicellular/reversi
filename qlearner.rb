@@ -2,8 +2,12 @@ require "ruby-fann"
 
 module Reversi
   class Qlearner
-    def initialize( color )
-      @internal_nn = RubyFann::Standard.new( num_inputs: 64, hidden_neurons: [ 10 ], num_outputs: 64)
+    def initialize( color, filename )
+      if filename.nil?
+        @internal_nn = RubyFann::Standard.new( num_inputs: 64, hidden_neurons: [ 10 ], num_outputs: 64)
+      else
+        read_nn(filename)
+      end
       @exploration = 0.1
       @learning = 0.7
       @discount = 0.7
@@ -59,7 +63,11 @@ module Reversi
     end
 
     def save_nn( filename )
-      @internal_nn.save( filename )
+      @internal_nn.save( "neural_network/" + filename )
+    end
+
+    def read_nn( filename )
+      @internal_nn = RubyFann::Standard.new(:filename => "neural_network/" + filename)
     end
   end
 end
