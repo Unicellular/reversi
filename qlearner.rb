@@ -26,7 +26,7 @@ module Reversi
     def action_select( board, color )
       return nil unless @color == color
       valid_moves = board.valid_moves( color )
-      if Random.rand > @exploration
+      if Random.rand < @exploration
         @last_action = valid_moves[Random.rand(valid_moves.length)]
       else
         actions_q = @internal_nn.run(board.content.flatten)
