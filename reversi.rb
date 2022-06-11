@@ -22,7 +22,7 @@ if __FILE__ == $PROGRAM_NAME
       stat[result] += 1
       list.push result
     end
-    puts stat
+    puts stat.merge(black_win_rate: stat[:black].to_f / (stat[:white] + stat[:black] + stat[:draw]))
   end
   qlearner.save_nn(nn_filename)
 end
